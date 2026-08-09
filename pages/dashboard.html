@@ -41,17 +41,17 @@
       <section class="hero">
         <div class="container hero-grid">
           <div>
-            <span class="eyebrow">Player Hub • Tournament access</span>
+            <span class="eyebrow">League control center</span>
             <h1 id="hero-title">Welcome back</h1>
-            <p id="hero-tagline">Your tournament dashboard is ready.</p>
-            <p id="hero-description">Browse fixtures, standings, and match detail after your registration is confirmed.</p>
+            <p id="hero-tagline">Create, manage, and run your league from one place.</p>
+            <p id="hero-description">Set up a league, add teams, schedule fixtures, and keep matches moving from live to upcoming.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="./standings.html">View standings</a>
-              <a class="btn btn-secondary" href="./fixtures.html">See fixtures</a>
+              <a class="btn btn-primary" href="#league-actions">Create league</a>
+              <a class="btn btn-secondary" href="#match-flow">View schedule</a>
               <button id="logout-button" class="btn btn-secondary" type="button">Logout</button>
             </div>
             <div class="hero-stat-grid" style="margin-top: 1.4rem;">
-              <div class="stat-card"><div class="label">Tournament status</div><div class="value" id="hero-status">In Progress</div></div>
+              <div class="stat-card"><div class="label">League status</div><div class="value" id="hero-status">Draft</div></div>
               <div class="stat-card"><div class="label">Teams</div><div class="value" id="hero-teams">0 teams</div></div>
               <div class="stat-card"><div class="label">Fixtures</div><div class="value" id="hero-matches">0 fixtures</div></div>
               <div class="stat-card"><div class="label">Next match</div><div class="value" id="hero-next">—</div></div>
@@ -60,19 +60,23 @@
           <div class="section-grid">
             <div class="panel">
               <div class="card-header">
-                <h3>Current leader</h3>
-                <span class="badge">Leader</span>
+                <h3>League actions</h3>
+                <span class="badge">Admin</span>
               </div>
-              <p id="hero-leader" style="font-size: 1.2rem; margin: 0.6rem 0 0;">—</p>
+              <div id="league-actions" class="section-grid" style="margin-top: 0.8rem;">
+                <a class="btn btn-primary" href="#">Create league</a>
+                <a class="btn btn-secondary" href="#">Join league</a>
+                <a class="btn btn-secondary" href="#">Create team</a>
+              </div>
             </div>
             <div class="panel">
               <div class="section-heading">
                 <div>
-                  <h3>Recent results</h3>
-                  <p>Latest completed fixtures</p>
+                  <h3>Latest update</h3>
+                  <p>Admin summary for the current league</p>
                 </div>
               </div>
-              <div id="recent-results" class="list-stack"></div>
+              <div class="empty-state">Use the admin update panel below to publish changes, fixture updates, and league announcements.</div>
             </div>
           </div>
         </div>
@@ -82,20 +86,20 @@
         <div class="container">
           <div class="section-heading">
             <div>
-              <h2>Featured teams</h2>
-              <p>High-performing squads in the current league</p>
+              <h2>Teams</h2>
+              <p>Registered squads ready for league play</p>
             </div>
           </div>
           <div id="featured-teams" class="grid-3"></div>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="match-flow">
         <div class="container">
           <div class="section-heading">
             <div>
-              <h2>Upcoming fixtures</h2>
-              <p>What is scheduled next on the calendar</p>
+              <h2>Match flow</h2>
+              <p>Live, upcoming, and completed fixtures in one view</p>
             </div>
           </div>
           <div id="upcoming-home" class="section-grid"></div>
@@ -107,7 +111,7 @@
           <div class="section-heading">
             <div>
               <h2>League standings</h2>
-              <p>Live order from points, goal difference, and goals scored</p>
+              <p>Current table on the home screen</p>
             </div>
           </div>
           <div class="panel">
@@ -138,19 +142,22 @@
         <div class="container">
           <div class="section-heading">
             <div>
-              <h2>Tournament statistics</h2>
-              <p>High-level numbers at a glance</p>
+              <h2>Admin update</h2>
+              <p>One place to publish changes for the league</p>
             </div>
           </div>
-          <div class="summary-grid">
-            <div class="stat-card"><div class="label">Total teams</div><div class="value" id="stats-total-teams">0</div></div>
-            <div class="stat-card"><div class="label">Total matches</div><div class="value" id="stats-total-matches">0</div></div>
-            <div class="stat-card"><div class="label">Completed</div><div class="value" id="stats-completed">0</div></div>
-            <div class="stat-card"><div class="label">Remaining</div><div class="value" id="stats-remaining">0</div></div>
-            <div class="stat-card"><div class="label">Total goals</div><div class="value" id="stats-goals">0</div></div>
-            <div class="stat-card"><div class="label">Current leader</div><div class="value" id="stats-leader">—</div></div>
-            <div class="stat-card"><div class="label">Top scorer</div><div class="value" id="stats-top-scorer">—</div></div>
-            <div class="stat-card"><div class="label">Best defense</div><div class="value" id="stats-defensive">—</div></div>
+          <div class="panel">
+            <form class="form-grid">
+              <div>
+                <label for="admin-title">Update title</label>
+                <input id="admin-title" type="text" placeholder="New league update" />
+              </div>
+              <div>
+                <label for="admin-message">Update message</label>
+                <textarea id="admin-message" rows="4" placeholder="Share fixture changes, team announcements, or league notes."></textarea>
+              </div>
+              <button class="btn btn-primary" type="button">Publish update</button>
+            </form>
           </div>
         </div>
       </section>
