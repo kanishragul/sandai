@@ -1,21 +1,21 @@
 :root {
-  --bg-primary: #060816;
-  --bg-secondary: #0c1225;
-  --surface: #111830;
-  --surface-strong: #16203c;
-  --text-primary: #f5f7ff;
-  --text-secondary: #93a0bf;
-  --accent: #5ee7d6;
-  --accent-strong: #2da1ff;
-  --danger: #ff6b6b;
-  --success: #33d39a;
-  --warning: #ffbe4d;
-  --border: rgba(255,255,255,0.1);
+  --bg-primary: #050505;
+  --bg-secondary: #110f10;
+  --surface: #111111;
+  --surface-strong: #1e1b18;
+  --text-primary: #f8f0d6;
+  --text-secondary: #b59d6a;
+  --accent: #d4af37;
+  --accent-strong: #f1c84f;
+  --danger: #ff5e5e;
+  --success: #5bd3a8;
+  --warning: #f9c96d;
+  --border: rgba(255,255,255,0.12);
   --radius: 20px;
   --radius-sm: 12px;
-  --shadow: 0 20px 60px rgba(0,0,0,0.35);
+  --shadow: 0 26px 70px rgba(0,0,0,0.34);
   --container: min(1180px, calc(100% - 2rem));
-  --transition: 220ms ease;
+  --transition: 240ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 * {
@@ -30,8 +30,9 @@ body {
   margin: 0;
   font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(93, 231, 214, 0.18), transparent 28%),
-    linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+    radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.16), transparent 18%),
+    radial-gradient(circle at 85% 10%, rgba(241, 200, 79, 0.1), transparent 15%),
+    linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
@@ -302,16 +303,14 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.4rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  background: rgba(94, 231, 214, 0.12);
-  color: var(--accent);
-}
-
-.badge.live {
-  background: rgba(255, 107, 107, 0.16);
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(212, 175, 55, 0.14);
+    color: var(--accent-strong);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   color: #ff9b9b;
 }
 

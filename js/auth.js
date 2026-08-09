@@ -1,7 +1,40 @@
+const AUTH_USER_KEY = 'sandai-user';
+const AUTH_SESSION_KEY = 'sandai-session';
+const PLAYER_PROFILE_KEY = 'sandai-player';
 const DUMMY_CREDENTIALS = {
   username: 'player',
-  password: 'play1234'
+  password: 'play1234',
+  name: 'Guest Player'
 };
+
+function getStoredUser() {
+  return JSON.parse(localStorage.getItem(AUTH_USER_KEY) || 'null');
+}
+
+function saveUser(user) {
+  localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
+}
+
+function saveSession(username) {
+  localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify({ loggedIn: true, username }));
+}
+
+function clearSession() {
+  localStorage.removeItem(AUTH_SESSION_KEY);
+  localStorage.removeItem(PLAYER_PROFILE_KEY);
+}
+
+function getSession() {
+  return JSON.parse(localStorage.getItem(AUTH_SESSION_KEY) || 'null');
+}
+
+function redirectTo(path) {
+  window.location.href = path;
+}
+
+function rootPath() {
+  return window.location.pathname.includes('/pages/') ? '../index.html' : './index.html';
+}
 
 function initAuth(page) {
   if (page === 'login') {
@@ -33,19 +66,81 @@ function initAuth(page) {
 
       if (!valid) return;
 
-      if (usernameInput.value === DUMMY_CREDENTIALS.username && passwordInput.value === DUMMY_CREDENTIALS.password) {
-        localStorage.setItem('sandai-session', JSON.stringify({ loggedIn: true }));
-        window.location.href = './join.html';
-      } else {
-        passwordInput.classList.add('input-error');
-        passwordError.textContent = 'Invalid credentials. Try player / play1234.';
+      const user = getStoredUser();
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if ((user && username === user.username && password === user.password) ||
+          (username === DUMMY_CREDENTIALS.username && password === DUMMY_CREDENTIALS.password)) {
+        saveSession(username);
+        redirectTo('./join.html');
+        return;
       }
+
+      passwordInput.classList.add('input-error');
+      passwordError.textContent = 'Invalid credentials. Try player / play1234 or sign up.';
+    });
+  }
+
+  if (page === 'signup') {
+    const form = document.getElementById('signup-form');
+    if (!form) return;
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const nameField = document.getElementById('signup-name');
+      const usernameField = document.getElementById('signup-username');
+      const passwordField = document.getElementById('signup-password');
+      const fields = [
+        { field: nameField, errorId: 'signup-name-error', message: 'Enter your full name.' },
+        { field: usernameField, errorId: 'signup-username-error', message: 'Create a username.' },
+        { field: passwordField, errorId: 'signup-password-error', message: 'Create a password.' }
+      ];
+      let valid = true;
+
+      fields.forEach(({ field, errorId, message }) => {
+        const error = document.getElementById(errorId);
+        if (!field || !error) return;
+        if (!field.value.trim()) {
+          field.classList.add('input-error');
+          error.textContent = message;
+          valid = false;
+        } else {
+          field.classList.remove('input-error');
+          error.textContent = '';
+        }
+      });
+
+      if (!valid) return;
+
+      const newUser = {
+        name: nameField.value.trim(),
+        username: usernameField.value.trim(),
+        password: passwordField.value.trim()
+      };
+
+      saveUser(newUser);
+      saveSession(newUser.username);
+      redirectTo('./join.html');
     });
   }
 
   if (page === 'join') {
     const form = document.getElementById('join-form');
     if (!form) return;
+
+    const currentSession = getSession();
+    const storedUser = getStoredUser();
+
+    if (!currentSession || !currentSession.loggedIn) {
+      redirectTo('./index.html');
+      return;
+    }
+
+    if (storedUser && currentSession && currentSession.username === storedUser.username) {
+      const nameInput = document.getElementById('join-name');
+      if (nameInput) nameInput.value = storedUser.name;
+    }
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -74,26 +169,50 @@ function initAuth(page) {
 
       if (!valid) return;
 
-      localStorage.setItem('sandai-player', JSON.stringify({
+      localStorage.setItem(PLAYER_PROFILE_KEY, JSON.stringify({
         name: nameField.value.trim(),
         team: teamField.value.trim(),
         game: gameField.value.trim(),
         joinedAt: new Date().toISOString()
       }));
-      window.location.href = './pages/dashboard.html';
+      redirectTo('./pages/dashboard.html');
     });
   }
 
   if (page === 'dashboard') {
-    const session = localStorage.getItem('sandai-player');
-    if (!session) {
-      window.location.href = '../login.html';
+    const session = getSession();
+    if (!session || !session.loggedIn) {
+      redirectTo('../index.html');
       return;
     }
 
-    const player = JSON.parse(session);
-    document.getElementById('hero-title').textContent = `Welcome, ${player.name}`;
-    document.getElementById('hero-tagline').textContent = `Ready to follow ${player.team} in the ${player.game} league.`;
-    document.getElementById('hero-description').textContent = 'Browse your tournament overview and keep track of matches, standings, and announcements.';
+    const player = JSON.parse(localStorage.getItem(PLAYER_PROFILE_KEY) || 'null');
+    if (!player || !player.name) {
+      redirectTo('../join.html');
+      return;
+    }
+
+    const title = document.getElementById('hero-title');
+    const tagline = document.getElementById('hero-tagline');
+    const description = document.getElementById('hero-description');
+
+    if (title) title.textContent = `Welcome, ${player.name}`;
+    if (tagline) tagline.textContent = `Ready to follow ${player.team} in the ${player.game} league.`;
+    if (description) description.textContent = 'Browse your tournament overview and keep track of matches, standings, and announcements.';
+
+    const logoutButton = document.getElementById('logout-button');
+    if (logoutButton) {
+      logoutButton.addEventListener('click', () => {
+        clearSession();
+        redirectTo('../index.html');
+      });
+    }
+  }
+
+  if (!['login', 'signup', 'join', 'dashboard'].includes(page)) {
+    const session = getSession();
+    if (!session || !session.loggedIn) {
+      redirectTo(rootPath());
+    }
   }
 }
