@@ -45,7 +45,8 @@
   .grid-2,
   .grid-3,
   .footer-grid,
-  .summary-grid {
+  .summary-grid,
+  .hero-stat-grid {
     grid-template-columns: 1fr;
   }
 
