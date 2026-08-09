@@ -14,33 +14,42 @@
   </head>
   <body data-page="login">
     <main class="section">
-      <div class="container" style="max-width: 520px;">
-        <section class="panel">
-          <div class="section-heading">
-            <div>
-              <h1>Sandai League</h1>
-              <p>Player login to enter the tournament hub.</p>
+      <div class="container">
+        <section class="auth-grid">
+          <div class="panel">
+            <div class="section-heading">
+              <div>
+                <h1>Sign in to Sandai League</h1>
+                <p>Access your personalized tournament dashboard with fast, secure login.</p>
+              </div>
             </div>
+            <form id="login-form" class="form-grid">
+              <div>
+                <label for="login-username">Username</label>
+                <input id="login-username" name="username" type="text" autocomplete="username" />
+                <div id="login-username-error" class="error-text"></div>
+              </div>
+              <div>
+                <label for="login-password">Password</label>
+                <input id="login-password" name="password" type="password" autocomplete="current-password" />
+                <div id="login-password-error" class="error-text"></div>
+              </div>
+              <button class="btn btn-primary" type="submit">Continue</button>
+              <p class="muted">Use the provided username and password to continue. This is a frontend demo session only.</p>
+            </form>
           </div>
-          <form id="login-form" class="form-grid">
-            <div>
-              <label for="login-username">Username</label>
-              <input id="login-username" name="username" type="text" autocomplete="username" />
-              <div id="login-username-error" class="error-text"></div>
-            </div>
-            <div>
-              <label for="login-password">Password</label>
-              <input id="login-password" name="password" type="password" autocomplete="current-password" />
-              <div id="login-password-error" class="error-text"></div>
-            </div>
-            <button class="btn btn-primary" type="submit">Continue</button>
-            <p class="muted">Use the provided username and password to continue. This is a frontend demo session only.</p>
-          </form>
+
+          <div class="auth-visual">
+            <span class="eyebrow">League access</span>
+            <h2>Jump into the tournament experience</h2>
+            <p>Discover fixtures, standings, and team insights in a minimal, premium interface designed for player clarity.</p>
+          </div>
         </section>
       </div>
     </main>
 
     <script src="./js/data.js"></script>
-    <script src="./js/auth.js"></script>    <script src="./js/auth.js"></script>    <script src="./js/app.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/app.js"></script>
   </body>
 </html>

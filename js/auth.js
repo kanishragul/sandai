@@ -1,6 +1,5 @@
 const AUTH_USER_KEY = 'sandai-user';
 const AUTH_SESSION_KEY = 'sandai-session';
-const PLAYER_PROFILE_KEY = 'sandai-player';
 const DUMMY_CREDENTIALS = {
   username: 'player',
   password: 'play1234',
@@ -21,7 +20,6 @@ function saveSession(username) {
 
 function clearSession() {
   localStorage.removeItem(AUTH_SESSION_KEY);
-  localStorage.removeItem(PLAYER_PROFILE_KEY);
 }
 
 function getSession() {
@@ -73,7 +71,7 @@ function initAuth(page) {
       if ((user && username === user.username && password === user.password) ||
           (username === DUMMY_CREDENTIALS.username && password === DUMMY_CREDENTIALS.password)) {
         saveSession(username);
-        redirectTo('./join.html');
+        redirectTo('./pages/dashboard.html');
         return;
       }
 
@@ -121,60 +119,6 @@ function initAuth(page) {
 
       saveUser(newUser);
       saveSession(newUser.username);
-      redirectTo('./join.html');
-    });
-  }
-
-  if (page === 'join') {
-    const form = document.getElementById('join-form');
-    if (!form) return;
-
-    const currentSession = getSession();
-    const storedUser = getStoredUser();
-
-    if (!currentSession || !currentSession.loggedIn) {
-      redirectTo('./index.html');
-      return;
-    }
-
-    if (storedUser && currentSession && currentSession.username === storedUser.username) {
-      const nameInput = document.getElementById('join-name');
-      if (nameInput) nameInput.value = storedUser.name;
-    }
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const nameField = document.getElementById('join-name');
-      const teamField = document.getElementById('join-team');
-      const gameField = document.getElementById('join-game');
-      const fields = [
-        { field: nameField, errorId: 'join-name-error', message: 'Enter your name.' },
-        { field: teamField, errorId: 'join-team-error', message: 'Enter your team name.' },
-        { field: gameField, errorId: 'join-game-error', message: 'Enter your game or sport.' }
-      ];
-      let valid = true;
-
-      fields.forEach(({ field, errorId, message }) => {
-        const error = document.getElementById(errorId);
-        if (!field || !error) return;
-        if (!field.value.trim()) {
-          field.classList.add('input-error');
-          error.textContent = message;
-          valid = false;
-        } else {
-          field.classList.remove('input-error');
-          error.textContent = '';
-        }
-      });
-
-      if (!valid) return;
-
-      localStorage.setItem(PLAYER_PROFILE_KEY, JSON.stringify({
-        name: nameField.value.trim(),
-        team: teamField.value.trim(),
-        game: gameField.value.trim(),
-        joinedAt: new Date().toISOString()
-      }));
       redirectTo('./pages/dashboard.html');
     });
   }
@@ -186,18 +130,14 @@ function initAuth(page) {
       return;
     }
 
-    const player = JSON.parse(localStorage.getItem(PLAYER_PROFILE_KEY) || 'null');
-    if (!player || !player.name) {
-      redirectTo('../join.html');
-      return;
-    }
-
+    const user = getStoredUser();
+    const playerName = user?.name || DUMMY_CREDENTIALS.name;
     const title = document.getElementById('hero-title');
     const tagline = document.getElementById('hero-tagline');
     const description = document.getElementById('hero-description');
 
-    if (title) title.textContent = `Welcome, ${player.name}`;
-    if (tagline) tagline.textContent = `Ready to follow ${player.team} in the ${player.game} league.`;
+    if (title) title.textContent = `Welcome, ${playerName}`;
+    if (tagline) tagline.textContent = `Your tournament hub is ready.`;
     if (description) description.textContent = 'Browse your tournament overview and keep track of matches, standings, and announcements.';
 
     const logoutButton = document.getElementById('logout-button');
@@ -209,7 +149,7 @@ function initAuth(page) {
     }
   }
 
-  if (!['login', 'signup', 'join', 'dashboard'].includes(page)) {
+  if (!['login', 'signup', 'dashboard'].includes(page)) {
     const session = getSession();
     if (!session || !session.loggedIn) {
       redirectTo(rootPath());
