@@ -35,7 +35,14 @@ function rootPath() {
 }
 
 function initAuth(page) {
+  const session = getSession();
+
   if (page === 'login') {
+    if (session && session.loggedIn) {
+      redirectTo('./pages/dashboard.html');
+      return;
+    }
+
     const form = document.getElementById('login-form');
     if (!form) return;
 
@@ -81,6 +88,11 @@ function initAuth(page) {
   }
 
   if (page === 'signup') {
+    if (session && session.loggedIn) {
+      redirectTo('./pages/dashboard.html');
+      return;
+    }
+
     const form = document.getElementById('signup-form');
     if (!form) return;
 
@@ -126,7 +138,6 @@ function initAuth(page) {
   if (page === 'dashboard') {
     const session = getSession();
     if (!session || !session.loggedIn) {
-      redirectTo('../index.html');
       return;
     }
 
@@ -152,7 +163,7 @@ function initAuth(page) {
   if (!['login', 'signup', 'dashboard'].includes(page)) {
     const session = getSession();
     if (!session || !session.loggedIn) {
-      redirectTo(rootPath());
+      return;
     }
   }
 }
