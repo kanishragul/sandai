@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initNavigation();
   applyActiveNav(page);
+  initAuth(page);
 
-  if (page === 'home') {
+  if (page === 'dashboard') {
     renderHomepage();
   }
 
@@ -29,10 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (page === 'announcements') {
     renderAnnouncements();
-  }
-
-  if (page === 'gallery') {
-    renderGallery();
   }
 
   if (page === 'about') {
@@ -95,8 +92,17 @@ function renderHomepage() {
   document.getElementById('hero-next').textContent = nextMatch ? `${nextMatch.teamA} vs ${nextMatch.teamB}` : 'No upcoming fixtures';
 
   renderList('recent-results', recentResults.map(createRecentResultMarkup));
-  renderList('featured-teams', tournamentData.teams.slice(0, 3).map(createFeaturedTeamMarkup));
-  renderList('upcoming-home', getMatches().filter((match) => match.status === 'upcoming').slice(0, 3).map(createMatchMarkup));
+
+  const featuredTeamsHtml = tournamentData.teams.length
+    ? tournamentData.teams.slice(0, 3).map(createFeaturedTeamMarkup)
+    : ['<div class="empty-state">No teams are registered yet. Your dashboard will populate after registration.</div>'];
+  renderList('featured-teams', featuredTeamsHtml);
+
+  const upcomingMatches = getMatches().filter((match) => match.status === 'upcoming').slice(0, 3);
+  renderList('upcoming-home', upcomingMatches.length
+    ? upcomingMatches.map(createMatchMarkup)
+    : ['<div class="empty-state">No upcoming fixtures have been created yet.</div>']);
+
   renderStandingsTable('standings-home', getStandings(), 5);
 
   document.getElementById('stats-total-teams').textContent = tournamentData.teams.length;
@@ -309,36 +315,6 @@ function renderAnnouncements() {
   `).join('');
 }
 
-function renderGallery() {
-  const container = document.getElementById('gallery-list');
-  if (!container) return;
-  container.innerHTML = tournamentData.gallery.map((item) => `
-    <article class="gallery-card">
-      <img src="${item.image}" alt="${item.title}" />
-      <div class="card-header">
-        <h3>${item.title}</h3>
-        <span class="badge">${item.category}</span>
-      </div>
-      <button type="button" data-preview="${item.image}">Preview</button>
-    </article>
-  `).join('');
-
-  container.querySelectorAll('[data-preview]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const lightbox = document.getElementById('lightbox');
-      const image = document.getElementById('lightbox-image');
-      if (!lightbox || !image) return;
-      image.src = button.getAttribute('data-preview');
-      lightbox.classList.add('active');
-    });
-  });
-
-  const lightbox = document.getElementById('lightbox');
-  if (lightbox) {
-    lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
-  }
-}
-
 function renderAbout() {
   const container = document.getElementById('about-list');
   if (!container) return;
@@ -401,7 +377,21 @@ function renderMatchDetail() {
   const detail = document.getElementById('match-detail');
   if (!heading || !detail) return;
 
-  const team = tournamentData.teams.find((entry) => entry.name === teamName) || tournamentData.teams[0];
+  const team = tournamentData.teams.length
+    ? tournamentData.teams.find((entry) => entry.name === teamName) || tournamentData.teams[0]
+    : null;
+
+  if (!team) {
+    heading.textContent = 'Match center';
+    detail.innerHTML = `
+      <article class="detail-card">
+        <h3>No team data available</h3>
+        <p class="muted">Register your team to see match center details and fixture history.</p>
+      </article>
+    `;
+    return;
+  }
+
   heading.textContent = `${team.name} profile`;
   detail.innerHTML = `
     <article class="detail-card">
@@ -421,7 +411,11 @@ function renderMatchDetail() {
     <article class="detail-card">
       <h3>Upcoming fixtures</h3>
       <div class="kicker-list">
-        ${getMatches().filter((match) => match.status === 'upcoming' && (match.teamA === team.name || match.teamB === team.name)).slice(0, 2).map((match) => `<div><span>${match.teamA} vs ${match.teamB}</span><span>${match.date}</span></div>`).join('')}
+        ${getMatches()
+          .filter((match) => match.status === 'upcoming' && (match.teamA === team.name || match.teamB === team.name))
+          .slice(0, 2)
+          .map((match) => `<div><span>${match.teamA} vs ${match.teamB}</span><span>${match.date}</span></div>`)
+          .join('') || '<div class="empty-state">No fixtures scheduled for this team yet.</div>'}
       </div>
     </article>
   `;

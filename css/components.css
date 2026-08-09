@@ -1,7 +1,6 @@
 .team-card,
 .match-card,
 .announcement-card,
-.gallery-card,
 .info-card {
   padding: 1.1rem;
 }
@@ -109,30 +108,8 @@
   background: rgba(255,255,255,0.06);
 }
 
-.announcement-card p,
-.gallery-card p {
+.announcement-card p {
   color: var(--text-secondary);
-}
-
-.gallery-card {
-  overflow: hidden;
-}
-
-.gallery-card img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border-radius: 14px;
-  margin-bottom: 0.75rem;
-}
-
-.gallery-card button {
-  margin-top: 0.5rem;
-  border: 0;
-  background: rgba(94, 231, 214, 0.12);
-  color: var(--accent);
-  padding: 0.65rem 0.9rem;
-  border-radius: 999px;
 }
 
 .filters {
