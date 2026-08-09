@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initNavigation();
   applyActiveNav(page);
+  initAuth(page);
 
-  if (page === 'home') {
+  if (page === 'dashboard') {
     renderHomepage();
   }
 

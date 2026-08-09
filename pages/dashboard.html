@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sandai League</title>
+    <meta name="description" content="Premium college tournament frontend for dynamic league management." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body data-page="dashboard">
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="./dashboard.html">
+          <span class="brand-mark">S</span>
+          <span>Sandai League</span>
+        </a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">
+          ☰
+        </button>
+        <nav class="site-nav" data-site-nav aria-label="Primary navigation">
+          <a class="active" href="./dashboard.html">Home</a>
+          <a href="./teams.html">Teams</a>
+          <a href="./fixtures.html">Fixtures</a>
+          <a href="./schedule.html">Schedule</a>
+          <a href="./standings.html">Standings</a>
+          <a href="./results.html">Results</a>
+          <a href="./statistics.html">Statistics</a>
+          <a href="./announcements.html">Announcements</a>
+          <a href="./gallery.html">Gallery</a>
+          <a href="./about.html">About</a>
+          <a href="./contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Player Hub • Tournament access</span>
+            <h1 id="hero-title">Welcome back</h1>
+            <p id="hero-tagline">Your tournament dashboard is ready.</p>
+            <p id="hero-description">Browse fixtures, standings, and match detail after your registration is confirmed.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="./standings.html">View standings</a>
+              <a class="btn btn-secondary" href="./fixtures.html">See fixtures</a>
+            </div>
+            <div class="hero-stat-grid" style="margin-top: 1.4rem;">
+              <div class="stat-card"><div class="label">Tournament status</div><div class="value" id="hero-status">In Progress</div></div>
+              <div class="stat-card"><div class="label">Teams</div><div class="value" id="hero-teams">0 teams</div></div>
+              <div class="stat-card"><div class="label">Fixtures</div><div class="value" id="hero-matches">0 fixtures</div></div>
+              <div class="stat-card"><div class="label">Next match</div><div class="value" id="hero-next">—</div></div>
+            </div>
+          </div>
+          <div class="section-grid">
+            <div class="panel">
+              <div class="card-header">
+                <h3>Current leader</h3>
+                <span class="badge">Leader</span>
+              </div>
+              <p id="hero-leader" style="font-size: 1.2rem; margin: 0.6rem 0 0;">—</p>
+            </div>
+            <div class="panel">
+              <div class="section-heading">
+                <div>
+                  <h3>Recent results</h3>
+                  <p>Latest completed fixtures</p>
+                </div>
+              </div>
+              <div id="recent-results" class="list-stack"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <h2>Featured teams</h2>
+              <p>High-performing squads in the current league</p>
+            </div>
+          </div>
+          <div id="featured-teams" class="grid-3"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <h2>Upcoming fixtures</h2>
+              <p>What is scheduled next on the calendar</p>
+            </div>
+          </div>
+          <div id="upcoming-home" class="section-grid"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <h2>League standings</h2>
+              <p>Live order from points, goal difference, and goals scored</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>POS</th>
+                    <th>TEAM</th>
+                    <th>P</th>
+                    <th>W</th>
+                    <th>D</th>
+                    <th>L</th>
+                    <th>GF</th>
+                    <th>GA</th>
+                    <th>GD</th>
+                    <th>PTS</th>
+                  </tr>
+                </thead>
+                <tbody id="standings-home"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <h2>Tournament statistics</h2>
+              <p>High-level numbers at a glance</p>
+            </div>
+          </div>
+          <div class="summary-grid">
+            <div class="stat-card"><div class="label">Total teams</div><div class="value" id="stats-total-teams">0</div></div>
+            <div class="stat-card"><div class="label">Total matches</div><div class="value" id="stats-total-matches">0</div></div>
+            <div class="stat-card"><div class="label">Completed</div><div class="value" id="stats-completed">0</div></div>
+            <div class="stat-card"><div class="label">Remaining</div><div class="value" id="stats-remaining">0</div></div>
+            <div class="stat-card"><div class="label">Total goals</div><div class="value" id="stats-goals">0</div></div>
+            <div class="stat-card"><div class="label">Current leader</div><div class="value" id="stats-leader">—</div></div>
+            <div class="stat-card"><div class="label">Top scorer</div><div class="value" id="stats-top-scorer">—</div></div>
+            <div class="stat-card"><div class="label">Best defense</div><div class="value" id="stats-defensive">—</div></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-grid">
+        <div>
+          <h3>Sandai League</h3>
+          <p>Premium tournament experience with reusable league data, polished match surfaces, and scalable frontend logic.</p>
+        </div>
+        <div>
+          <h3>Navigation</h3>
+          <div class="footer-links">
+            <a href="./teams.html">Teams</a>
+            <a href="./fixtures.html">Fixtures</a>
+            <a href="./standings.html">Standings</a>
+          </div>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <div class="footer-links">
+            <a href="mailto:tournament@sdai.edu">tournament@sdai.edu</a>
+            <a href="tel:+15550142210">+1 (555) 014-2210</a>
+          </div>
+        </div>
+        <div>
+          <h3>Social</h3>
+          <div class="footer-links">
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">X</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/app.js"></script>
+  </body>
+</html>
