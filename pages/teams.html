@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teams • Sandai League</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body data-page="teams">
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="../index.html">
+          <span class="brand-mark">S</span>
+          <span>Sandai League</span>
+        </a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" data-site-nav>
+          <a href="../index.html">Home</a>
+          <a class="active" href="./teams.html">Teams</a>
+          <a href="./fixtures.html">Fixtures</a>
+          <a href="./schedule.html">Schedule</a>
+          <a href="./standings.html">Standings</a>
+          <a href="./results.html">Results</a>
+          <a href="./statistics.html">Statistics</a>
+          <a href="./announcements.html">Announcements</a>
+          <a href="./gallery.html">Gallery</a>
+          <a href="./about.html">About</a>
+          <a href="./contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h1>Teams</h1>
+            <p>Browse the league roster and track each side's momentum.</p>
+          </div>
+        </div>
+        <div class="filters">
+          <div class="filter-group">
+            <label for="team-search">Search teams</label>
+            <input id="team-search" type="search" placeholder="Search by team or status" />
+          </div>
+          <div class="filter-group">
+            <label for="team-status">Status</label>
+            <select id="team-status">
+              <option value="all">All statuses</option>
+              <option value="rising">Rising</option>
+              <option value="hot">Hot</option>
+              <option value="balanced">Balanced</option>
+              <option value="solid">Solid</option>
+              <option value="forming">Forming</option>
+              <option value="ready">Ready</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="team-sort">Sort by</label>
+            <select id="team-sort">
+              <option value="position">Position</option>
+              <option value="points">Points</option>
+              <option value="wins">Wins</option>
+              <option value="goals">Goals For</option>
+            </select>
+          </div>
+        </div>
+        <div id="team-list" class="grid-3"></div>
+      </div>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/app.js"></script>
+  </body>
+</html>
