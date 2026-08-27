@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login • Sandai League</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+  </head>
+  <body data-page="login">
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="./index.html">
+          <img class="brand-logo" src="./assets/logos/sandai-logo.svg" alt="Sandai logo" />
+          <span>Sandai League</span>
+        </a>
+      </div>
+    </header>
+    <main class="section">
+      <div class="container" style="max-width: 520px;">
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <h1>Welcome to Sandai League</h1>
+              <p>Enter your credentials to join the tournament hub for players and teams.</p>
+            </div>
+          </div>
+          <div class="auth-brand">
+            <img class="brand-logo-large" src="./assets/logos/sandai-logo.svg" alt="Sandai League logo" />
+            <p class="muted">Premium tournament access</p>
+          </div>
+          <form id="login-form" class="form-grid">
+            <div>
+              <label for="login-username">Username</label>
+              <input id="login-username" name="username" type="text" autocomplete="username" />
+              <div id="login-username-error" class="error-text"></div>
+            </div>
+            <div>
+              <label for="login-password">Password</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" />
+              <div id="login-password-error" class="error-text"></div>
+            </div>
+            <button class="btn btn-primary" type="submit">Continue</button>
+            <p class="muted">This is a frontend-only experience. The credentials are simulated for demo purposes.</p>
+            <p class="muted">New player? <a href="./signup.html">Sign up now</a>.</p>
+          </form>
+        </section>
+      </div>
+    </main>
+    <script src="./js/data.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

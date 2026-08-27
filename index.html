@@ -1,34 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="A simple tournament dashboard for every sport and game." />
-    <title>Sandai League</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <title>Login • Sandai League</title>
+    <meta name="description" content="Sign in to Sandai League and join the tournament experience." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
   </head>
-  <body>
-    <header class="header">
-      <div class="container nav">
-        <a class="brand" href="#top" aria-label="Sandai League home"><span>S</span> Sandai League</a>
-        <nav aria-label="Main navigation"><a href="#matches">Matches</a><a href="#standings">Standings</a><a href="#teams">Teams</a></nav>
+  <body data-page="login">
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="./index.html">
+          <img class="brand-logo" src="./assets/logos/sandai-logo.svg" alt="Sandai logo" />
+          <span>Sandai League</span>
+        </a>
       </div>
     </header>
-    <main id="top">
-      <section class="hero container">
-        <div><p class="eyebrow">Community tournament</p><h1>All your league action, in one place.</h1><p class="intro">Follow fixtures, results, team form, and the current table without the clutter.</p><a class="button" href="#matches">See next match <span aria-hidden="true">→</span></a></div>
-        <aside class="next-match" aria-label="Next match"><p class="label">Next match</p><div class="match-teams"><strong>Phoenix United</strong><span>vs</span><strong>Apex Tigers</strong></div><p>30 Aug 2026 · 6:30 PM</p><p class="venue">North Campus Arena</p></aside>
-      </section>
-      <section class="container stats" aria-label="Tournament summary">
-        <div><strong id="team-count">6</strong><span>Teams</span></div><div><strong id="match-count">6</strong><span>Matches</span></div><div><strong id="played-count">2</strong><span>Completed</span></div><div><strong id="leader-name">Harbor Lions</strong><span>Current leader</span></div>
-      </section>
-      <section id="matches" class="container section">
-        <div class="section-title"><div><p class="eyebrow">Match centre</p><h2>Matches</h2></div><button class="filter active" type="button" data-filter="all">All</button><button class="filter" type="button" data-filter="upcoming">Upcoming</button><button class="filter" type="button" data-filter="completed">Results</button></div><div id="match-list" class="match-list"></div>
-      </section>
-      <section id="standings" class="section split"><div><p class="eyebrow">League table</p><h2>Standings</h2><p class="section-copy">Three points for a win. One point for a draw.</p></div><div class="table-card"><table><thead><tr><th>#</th><th>Team</th><th>P</th><th>GD</th><th>Pts</th></tr></thead><tbody id="standings-list"></tbody></table></div></section>
-      <section id="teams" class="container section"><p class="eyebrow">The league</p><h2>Teams</h2><div id="team-list" class="teams"></div></section>
+    <main class="section">
+      <div class="container">
+        <section class="auth-grid">
+          <div class="panel">
+            <div class="section-heading">
+              <div>
+                <h1>Sign in to Sandai League</h1>
+                <p>Access your personalized tournament dashboard with fast, secure login.</p>
+              </div>
+            </div>
+            <div class="auth-brand">
+              <img class="brand-logo-large" src="./assets/logos/sandai-logo.svg" alt="Sandai League logo" />
+              <p class="muted">Premium tournament access</p>
+            </div>
+            <form id="login-form" class="form-grid">
+              <div>
+                <label for="login-username">Username</label>
+                <input id="login-username" name="username" type="text" autocomplete="username" />
+                <div id="login-username-error" class="error-text"></div>
+              </div>
+              <div>
+                <label for="login-password">Password</label>
+                <input id="login-password" name="password" type="password" autocomplete="current-password" />
+                <div id="login-password-error" class="error-text"></div>
+              </div>
+              <button class="btn btn-primary" type="submit">Continue</button>
+              <p class="muted">Use the provided username and password to continue. This is a frontend demo session only.</p>
+            </form>
+          </div>
+
+          <div class="auth-visual">
+            <span class="eyebrow">League access</span>
+            <h2>Jump into the tournament experience</h2>
+            <p>Discover fixtures, standings, and team insights in a minimal, premium interface designed for player clarity.</p>
+          </div>
+        </section>
+      </div>
     </main>
-    <footer><div class="container"><a class="brand" href="#top"><span>S</span> Sandai League</a><p>Simple tournament management for every game.</p></div></footer>
-    <script src="js/data.js"></script><script src="js/app.js"></script>
+
+    <script src="./js/data.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/app.js"></script>
   </body>
 </html>
